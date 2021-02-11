@@ -16,7 +16,7 @@ class PaginaInicialTest extends \PHPUnit\Framework\TestCase
         $driver = RemoteWebDriver::create($host, DesiredCapabilities::chrome());
 
         // Act
-        $driver->navigate()->to(config('app.url'));
+        $driver->navigate()->to('http://localhost:8000');
 
         // Assert
         self::assertStringContainsString('Séries', $driver->getPageSource());
