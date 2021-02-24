@@ -18,7 +18,7 @@ class RegistroTest extends TestCase {
 
         // Act
             // busca cada elemento do form e preenche com dados
-            $driver->findElement(WebDriverBy::id('email'))->sendKeys('email2@exemplo.com');
+            $driver->findElement(WebDriverBy::id('email'))->sendKeys(md5(time()) . '@exemplo.com');
             $driver->findElement(WebDriverBy::id('name'))->sendKeys('Nome Fictício');
             $driver->findElement(WebDriverBy::id('password'))->sendKeys('qwe123');
             // clica no botão de enviar
