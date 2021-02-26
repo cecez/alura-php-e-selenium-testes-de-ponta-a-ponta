@@ -32,6 +32,20 @@ class CadastroSeriesTest extends TestCase {
         $seletorGenero = new WebDriverSelect($selectGenero);
         $seletorGenero->selectByValue('acao');
 
+        // se for arquivo
+        // $driver->findElement()->sendKeys('/caminho/do/arquivo.tmp');
+        // se for <textarea>
+        // talvez seja necessário dar clique no elemento para então entrar com o texto
+
+        /**
+         * Vimos como manipular <select>s e conversamos sobre alguns casos de campos mais complexos,
+         * mas se você quiser entrar em detalhes sobre esse tipo de estudo, existe uma página em construção na
+         * documentação: https://github.com/php-webdriver/php-webdriver/wiki/Select,-checkboxes,-radio-buttons
+         *
+         * Já sobre a parte de envio de arquivos, a documentação já está pronta e é bem simples:
+         * https://github.com/php-webdriver/php-webdriver/wiki/Upload-a-file
+         */
+
             // submete formulário
             $inputEpisodios->submit();
 
