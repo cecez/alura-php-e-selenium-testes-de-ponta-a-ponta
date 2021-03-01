@@ -24,5 +24,7 @@ class PaginaInicialTest extends \PHPUnit\Framework\TestCase
         $textoH1    = $driver->findElement($h1Locator)->getText();
         self::assertStringContainsString('Séries', $textoH1);
 
+        $driver->close();
+
     }
 }

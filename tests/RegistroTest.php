@@ -32,6 +32,8 @@ class RegistroTest extends TestCase {
                 RemoteWebElement::class,
                 $driver->findElement(WebDriverBy::linkText('Sair'))
             );
+
+        $driver->close();
     }
 
 }
