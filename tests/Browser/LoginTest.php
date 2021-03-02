@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class LoginTest extends DuskTestCase
 {
-    use DatabaseMigrations;
+    //use DatabaseMigrations;
 
     /**
      * A Dusk test example.
@@ -23,9 +23,9 @@ class LoginTest extends DuskTestCase
         $user = factory(User::class)->create();
 
         $this->browse(function (Browser $browser) use ($user) {
-            $browser->visit('/entrar')
-                    ->type('email', $user->email)
-                    ->type('password', 'password')
+            $browser->visit('http://localhost:8000/entrar')
+                    ->type('email', 'email@example.com')
+                    ->type('password', '123')
                     ->press('Entrar')
                     ->assertPathIs('/series')
                     ->assertSeeLink('Sair')
