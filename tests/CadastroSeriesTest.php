@@ -29,6 +29,21 @@ class CadastroSeriesTest extends TestCase {
         $this->driver->close();
     }
 
+    public function testCadastrarNovaSerieSemNomeDeveGerarErro() {
+
+        // Act
+        $selectGenero   = $this->driver->findElement(WebDriverBy::id('genre'));
+        $seletorGenero  = new WebDriverSelect($selectGenero);
+        $seletorGenero->selectByValue('acao');
+        $this->driver->findElement(WebDriverBy::id('qtd_temporadas'))->sendKeys('2');
+        $this->driver->findElement(WebDriverBy::tagName('button'))->click();
+
+        // Assert
+        self::assertSame('http://localhost:8000/adicionar-serie', $this->driver->getCurrentURL());
+        self::assertSame($this->driver->findElement(WebDriverBy::id('nome'))->getAttribute('validationMessage'), 'Preencha este campo.');
+    }
+
+
     public function testCadastrarNovaSerieDeveRedirecionarParaListagem()
     {
 
