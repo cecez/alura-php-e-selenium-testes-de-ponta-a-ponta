@@ -8,39 +8,53 @@ use PHPUnit\Framework\TestCase;
 
 class CadastroSeriesTest extends TestCase {
 
-    private RemoteWebDriver $driver;
+    private static RemoteWebDriver $driver;
+
+    // locators extraídos
+    private static WebDriverBy $loginEmail;
+    private static WebDriverBy $loginPassword;
+    private static WebDriverBy $adicionarSerieGenre;
+
+    public static function setUpBeforeClass()
+    {
+        // preenche locators
+        self::$loginEmail           = WebDriverBy::id('email');
+        self::$loginPassword        = WebDriverBy::id('password');
+        self::$adicionarSerieGenre  = WebDriverBy::id('genre');
+
+        // Arrange
+        self::$driver = RemoteWebDriver::create('http://localhost:4444/wd/hub', DesiredCapabilities::chrome());
+        self::$driver->get('http://localhost:8000/adicionar-serie');
+
+        // faz login
+        self::$driver->findElement(self::$loginEmail)->sendKeys('email@example.com');
+        self::$driver->findElement(self::$loginPassword)->sendKeys('123')->submit();
+
+    }
 
     protected function setUp()
     {
-        // Arrange
-        $host   = 'http://localhost:4444/wd/hub';
-        $this->driver = RemoteWebDriver::create($host, DesiredCapabilities::chrome());
-        $this->driver->get('http://localhost:8000/adicionar-serie');
-
-        // faz login e navega
-        $this->driver->findElement(WebDriverBy::id('email'))->sendKeys('email@example.com');
-        $this->driver->findElement(WebDriverBy::id('password'))->sendKeys('123')->submit();
-        $this->driver->get('http://localhost:8000/adicionar-serie');
+        self::$driver->get('http://localhost:8000/adicionar-serie');
     }
 
-    protected function tearDown()
+    public static function tearDownAfterClass()
     {
         // fecha navegador
-        $this->driver->close();
+        self::$driver->close();
     }
 
     public function testCadastrarNovaSerieSemNomeDeveGerarErro() {
 
         // Act
-        $selectGenero   = $this->driver->findElement(WebDriverBy::id('genre'));
+        $selectGenero   = self::$driver->findElement(self::$adicionarSerieGenre);
         $seletorGenero  = new WebDriverSelect($selectGenero);
         $seletorGenero->selectByValue('acao');
-        $this->driver->findElement(WebDriverBy::id('qtd_temporadas'))->sendKeys('2');
-        $this->driver->findElement(WebDriverBy::tagName('button'))->click();
+        self::$driver->findElement(WebDriverBy::id('qtd_temporadas'))->sendKeys('2');
+        self::$driver->findElement(WebDriverBy::tagName('button'))->click();
 
         // Assert
-        self::assertSame('http://localhost:8000/adicionar-serie', $this->driver->getCurrentURL());
-        self::assertSame($this->driver->findElement(WebDriverBy::id('nome'))->getAttribute('validationMessage'), 'Preencha este campo.');
+        self::assertSame('http://localhost:8000/adicionar-serie', self::$driver->getCurrentURL());
+        self::assertSame(self::$driver->findElement(WebDriverBy::id('nome'))->getAttribute('validationMessage'), 'Preencha este campo.');
     }
 
 
@@ -48,14 +62,14 @@ class CadastroSeriesTest extends TestCase {
     {
 
         // Act
-        $this->driver->findElement(WebDriverBy::id('nome'))->sendKeys('Nome de série');
-        $this->driver->findElement(WebDriverBy::id('qtd_temporadas'))->sendKeys('2');
+        self::$driver->findElement(WebDriverBy::id('nome'))->sendKeys('Nome de série');
+        self::$driver->findElement(WebDriverBy::id('qtd_temporadas'))->sendKeys('2');
 
-        $inputEpisodios = $this->driver->findElement(WebDriverBy::id('ep_por_temporada'));
+        $inputEpisodios = self::$driver->findElement(WebDriverBy::id('ep_por_temporada'));
         $inputEpisodios->sendKeys('10');
 
         // obtém <select> e seleciona uma opção
-        $selectGenero = $this->driver->findElement(WebDriverBy::id('genre'));
+        $selectGenero = self::$driver->findElement(self::$adicionarSerieGenre);
         $seletorGenero = new WebDriverSelect($selectGenero);
         $seletorGenero->selectByValue('acao');
 
@@ -77,11 +91,11 @@ class CadastroSeriesTest extends TestCase {
             $inputEpisodios->submit();
 
         // Assert
-        self::assertSame('http://localhost:8000/series', $this->driver->getCurrentURL());
+        self::assertSame('http://localhost:8000/series', self::$driver->getCurrentURL());
         // e que existe um texto de confirmação
         self::assertSame(
             'Série com suas respectivas temporadas e episódios adicionada.',
-            trim($this->driver->findElement(WebDriverBy::cssSelector('div.alert.alert-success'))->getText())
+            trim(self::$driver->findElement(WebDriverBy::cssSelector('div.alert.alert-success'))->getText())
         );
 
 
