@@ -1,5 +1,6 @@
 <?php
 
+use Alura\E2E\Tests\PageObject\PaginaLogin;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\WebDriverBy;
@@ -11,15 +12,11 @@ class CadastroSeriesTest extends TestCase {
     private static RemoteWebDriver $driver;
 
     // locators extraídos
-    private static WebDriverBy $loginEmail;
-    private static WebDriverBy $loginPassword;
     private static WebDriverBy $adicionarSerieGenre;
 
     public static function setUpBeforeClass()
     {
         // preenche locators
-        self::$loginEmail           = WebDriverBy::id('email');
-        self::$loginPassword        = WebDriverBy::id('password');
         self::$adicionarSerieGenre  = WebDriverBy::id('genre');
 
         // Arrange
@@ -27,8 +24,8 @@ class CadastroSeriesTest extends TestCase {
         self::$driver->get('http://localhost:8000/adicionar-serie');
 
         // faz login
-        self::$driver->findElement(self::$loginEmail)->sendKeys('email@example.com');
-        self::$driver->findElement(self::$loginPassword)->sendKeys('123')->submit();
+        $paginaLogin = new PaginaLogin(self::$driver);
+        $paginaLogin->realizaLoginCom('email@example.com', '123');
 
     }
 
