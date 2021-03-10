@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Alura\E2E\Tests\PageObject;
+namespace Tests\PageObject;
 
 
 use Facebook\WebDriver\Remote\RemoteWebDriver;
