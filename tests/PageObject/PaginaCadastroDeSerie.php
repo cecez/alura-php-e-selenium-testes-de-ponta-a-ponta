@@ -25,20 +25,37 @@ class PaginaCadastroDeSerie
         $this->driver->get('http://localhost:8000/adicionar-serie');
     }
 
-    public function preencheCom(string $genero, string $qtdTemporada, string $nome = null, string $episodios = null)
+    public function preencheGenero(string $genero): self
     {
         $seletorGenero  = new WebDriverSelect($this->driver->findElement(WebDriverBy::id('genre')));
         $seletorGenero->selectByValue($genero);
-        $this->driver->findElement(WebDriverBy::id('qtd_temporadas'))->sendKeys($qtdTemporada);
 
-        if (!empty($nome)) {
-            $this->driver->findElement(WebDriverBy::id('nome'))->sendKeys($nome);
-        }
+        return $this;
+    }
 
-        if (!empty($episodios)) {
-            $this->driver->findElement(WebDriverBy::id('ep_por_temporada'))->sendKeys($episodios);
-        }
+    public function preencheTemporadas(int $qtdTemporadas): self
+    {
+        $this->driver->findElement(WebDriverBy::id('qtd_temporadas'))->sendKeys($qtdTemporadas);
 
+        return $this;
+    }
+
+    public function preencheNome(string $nome): self
+    {
+        $this->driver->findElement(WebDriverBy::id('nome'))->sendKeys($nome);
+
+        return $this;
+    }
+
+    public function preencheEspisodios(int $episodios): self
+    {
+        $this->driver->findElement(WebDriverBy::id('ep_por_temporada'))->sendKeys($episodios);
+
+        return $this;
+    }
+
+    public function submeteFormulario()
+    {
         $this->driver->findElement(WebDriverBy::tagName('button'))->click();
     }
 

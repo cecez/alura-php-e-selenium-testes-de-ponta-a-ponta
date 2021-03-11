@@ -44,7 +44,9 @@ class CadastroSeriesTest extends TestCase {
     public function testCadastrarNovaSerieSemNomeDeveGerarErro()
     {
         // Act
-        $this->paginaCadastroDeSerie->preencheCom('acao', '2');
+        $this->paginaCadastroDeSerie->preencheGenero('acao')
+                                    ->preencheTemporadas(2)
+                                    ->submeteFormulario();
 
         // Assert
         self::assertSame('http://localhost:8000/adicionar-serie', self::$driver->getCurrentURL());
@@ -54,7 +56,11 @@ class CadastroSeriesTest extends TestCase {
     public function testCadastrarNovaSerieDeveRedirecionarParaListagem()
     {
         // Act
-        $this->paginaCadastroDeSerie->preencheCom('acao', '3', 'Nome de série', '10');
+        $this->paginaCadastroDeSerie->preencheNome('Nome de série ' . date('dmYis'))
+                                    ->preencheTemporadas(3)
+                                    ->preencheGenero('acao')
+                                    ->preencheEspisodios(12)
+                                    ->submeteFormulario();
 
         // Assert
         self::assertSame('http://localhost:8000/series', self::$driver->getCurrentURL());
