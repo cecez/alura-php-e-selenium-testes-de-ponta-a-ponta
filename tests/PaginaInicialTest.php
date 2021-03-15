@@ -7,6 +7,7 @@ namespace Tests;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\WebDriverBy;
+use Tests\PageObject\PaginaInicial;
 
 class PaginaInicialTest extends \PHPUnit\Framework\TestCase
 {
@@ -17,12 +18,12 @@ class PaginaInicialTest extends \PHPUnit\Framework\TestCase
         $driver = RemoteWebDriver::create($host, DesiredCapabilities::chrome());
 
         // Act
-        $driver->navigate()->to('http://localhost:8000');
+        $paginaInicial = new PaginaInicial($driver);
+        $paginaInicial->visita();
+
 
         // Assert
-        $h1Locator  = WebDriverBy::tagName('h1');
-        $textoH1    = $driver->findElement($h1Locator)->getText();
-        self::assertStringContainsString('Séries', $textoH1);
+        self::assertStringContainsString('Séries', $paginaInicial->obtemTextoH1());
 
         $driver->close();
 

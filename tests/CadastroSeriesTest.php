@@ -11,16 +11,10 @@ class CadastroSeriesTest extends TestCase {
 
     private static RemoteWebDriver $driver;
 
-    // locators extraídos
-    private static WebDriverBy $adicionarSerieGenre;
-
     private PaginaCadastroDeSerie $paginaCadastroDeSerie;
 
     public static function setUpBeforeClass()
     {
-        // preenche locators
-        self::$adicionarSerieGenre  = WebDriverBy::id('genre');
-
         // Arrange
         self::$driver = RemoteWebDriver::create('http://localhost:4444/wd/hub', DesiredCapabilities::chrome());
 
