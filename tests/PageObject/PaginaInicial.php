@@ -27,4 +27,19 @@ class PaginaInicial
 
         return $this->driver->findElement($h1Locator)->getText();
     }
+
+    public function clicaParaEditarSeriadoDeId(int $idSerieParaAlterar): self
+    {
+        $elementoLi = $this->driver->findElement(WebDriverBy::cssSelector("li[data-serie-id='$idSerieParaAlterar']"));
+        $elementoLi->findElement(WebDriverBy::className('btn-info'))->click();
+
+        return $this;
+    }
+
+    public function defineNomeDoSeriadoDeId(int $idSerieParaAlterar, string $nomeSerieAlterada): self
+    {
+        // continuar aqui 8min
+
+        return $this;
+    }
 }
