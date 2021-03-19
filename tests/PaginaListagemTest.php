@@ -27,7 +27,7 @@ class PaginaListagemTest extends \PHPUnit\Framework\TestCase
         $idSerieParaAlterar = 2;
         $paginaInicial->clicaParaEditarSeriadoDeId($idSerieParaAlterar)
                       ->defineNomeDoSeriadoDeId($idSerieParaAlterar, $nomeSerieAlterada)
-                      ->finalizaEdicao();
+                      ->finalizaEdicaoDoSeriadoDeId($idSerieParaAlterar);
 
         // Assert
         self::assertSame($nomeSerieAlterada, $paginaInicial->nomeSeriadoDeId($idSerieParaAlterar));
