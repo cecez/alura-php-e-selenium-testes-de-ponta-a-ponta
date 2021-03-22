@@ -6,6 +6,7 @@ namespace Tests\PageObject;
 
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\WebDriverBy;
+use Facebook\WebDriver\WebDriverExpectedCondition;
 
 class PaginaInicial
 {
@@ -58,6 +59,14 @@ class PaginaInicial
 
     public function nomeSeriadoDeId(int $idSerieParaAlterar): string
     {
-        return $this->driver->findElement(WebDriverBy::id("nome-serie-$idSerieParaAlterar]"))->getText();
+
+        $seletorNomeDaSerie     = WebDriverBy::id("nome-serie-$idSerieParaAlterar");
+        $elementoNomeDaSerie    = $this->driver->findElement($seletorNomeDaSerie);
+
+        // aguarda até elemento ficar visível
+        // mais detalhes em https://github.com/php-webdriver/php-webdriver/wiki/HowTo-Wait
+        $this->driver->wait()->until(WebDriverExpectedCondition::visibilityOf($elementoNomeDaSerie));
+
+        return $elementoNomeDaSerie->getText();
     }
 }

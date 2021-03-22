@@ -24,7 +24,7 @@ class PaginaListagemTest extends \PHPUnit\Framework\TestCase
         // Act
 
         $nomeSerieAlterada  = 'Série alterada';
-        $idSerieParaAlterar = 2;
+        $idSerieParaAlterar = 1;
         $paginaInicial->clicaParaEditarSeriadoDeId($idSerieParaAlterar)
                       ->defineNomeDoSeriadoDeId($idSerieParaAlterar, $nomeSerieAlterada)
                       ->finalizaEdicaoDoSeriadoDeId($idSerieParaAlterar);
